@@ -1,0 +1,54 @@
+﻿.loginBoxes {    cursor: no-drop;
+}
+.loginBox {
+    opacity: .4;
+    animation: fade-out .5s ease-in-out;
+}
+.loginBox > div {
+    border: 1px solid #e8ebf1;
+    box-shadow: 0 0 13px #e8ebf1;
+    height: 100%;
+    pointer-events: none;
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .4;
+    }
+}
+
+.indicator div {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #38d39f;
+    cursor: pointer;
+}
+
+.loginBox.active {
+    opacity: 1 !important;
+    animation: fade-in .5s ease-in-out;
+    cursor: context-menu;
+}
+    .loginBox.active > div {
+        pointer-events: auto;
+    }
+
+@keyframes fade-in {
+    0% {
+        opacity: .4;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.indicator div.active {
+    background-color: #38d39f;
+}

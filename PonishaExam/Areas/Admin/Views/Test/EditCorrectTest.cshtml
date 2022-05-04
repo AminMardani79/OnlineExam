@@ -1,0 +1,227 @@
+﻿@model Tuple<List<AnswerViewModel>, List<AnswerViewModel>, List<QuestionViewModel>, List<QuestionViewModel>, string, List<CorrectTestViewModel>>
+@{
+    ViewData["Title"] = "ویرایش تصحیح آزمون";
+}
+<div class="row justify-content-between mb-2 testsContainer p-3">
+    @if (ViewBag.TestFile != null)
+    {
+        <div class="row">
+            <a class="btn btn-danger mr-2 text-white" href="/files/@ViewBag.TestFile">مشاهده فایل ازمون</a>
+            <button type="button" class="btn btn-primary mx-2" data-toggle="modal" data-target="#exampleModalCenter">
+                راهنما <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </button>
+        </div>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            راهنما <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        سوالات تشریحی توسط مدرس باید تصحیح شود و پس از نمره دادن به سوالات تشریحی ثبت نمرات تشریحی را بفشارید.
+                        <br />
+                        پس از اعمال نمرات تشریحی جدول پایین صفحه درصد سوالات تستی و تشریحی را مشترکا نمایش میدهد.
+                        <br />
+                        در نهایت پس از اتمام تصحیح آزمون بر روی دکمه ثبت نمرات کلیک کنید.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <a class="d-inline-block text-black" href="/AdminPanel/Test/participants/@ViewBag.TestId/@ViewBag.TestTitle/@ViewBag.TestFile">
+        شرکت کننده ها
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+    </a>
+</div>
+<div class="row testsContainer">
+    <form href="/AdminPanel/Test/CorrectTest/@ViewBag.TestId/@ViewBag.StudentId/@ViewBag.TestFile" class="col-md-6 p-3 tests">
+        <header class="text-center">
+            <h4>سوالات تشریحی</h4>
+        </header>
+        <div class="row py-3 overflow-auto" style="height: 470px">
+            <div class="col-md-6">
+                <header class="text-center p-2">
+                    <h5>صورت سوال</h5>
+                </header>
+                @foreach (var item in Model.Item4)
+                {
+                    <div class="row">
+                        <div class="col-3 text-center h-100 align-self-center">
+                            <input type="number" class="text-center" name="descriptiveScore" min="0" max="@item.Score" value="0" /> <br />
+                            <span>از</span> <br />
+                            <span>@item.Score</span>
+                        </div>
+                        <div class="question col-9">
+                            <p>@item.QuestionContext</p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-6">
+                <header class="text-center p-2">
+                    <h5>پاسخ دانش آموز</h5>
+                </header>
+                @foreach (var item in Model.Item2)
+                {
+                    <div>
+                        <div class="pb-2">
+                            <span>@item.AnswerNumber :</span>
+                        </div>
+                        <textarea>@item.AnswerContext</textarea>
+                    </div>
+                }
+            </div>
+        </div>
+        @if (Model.Item5 != null)
+        {
+            <div class="py-3">
+                <a href="/AdminPanel/DownloadFile/@Model.Item5" class="btn btn-success text-white" style="width: 141px">دانلود فایل آپلودی</a>
+            </div>
+        }
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary text-white" onclick="SubmitDescriptives()">ثبت نمرات تشریحی</button>
+        </div>
+    </form>
+    <div class="col-md-6 p-3">
+        <header class="text-center">
+            <h4>سوالات تستی</h4>
+        </header>
+        <div class="row py-3 overflow-auto" style="height: 470px">
+            <div class="col-6">
+                <h5 class="text-center p-2">کلید آزمون</h5>
+                <div class="table-responsive">
+                    <table class="table text-center" style="direction: ltr;">
+                        <thead>
+                            <tr>
+                                <th style="width: 145px"></th>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var key in Model.Item3)
+                            {
+                                <tr class="hidden">
+                                    <td>@key.QuestionNumber</td>
+                                    <td colspan="4" style="padding: 10px 0">
+                                        <input type="radio" @((key.KeyAnswer == "1") ? "checked" : "" ) name="question @key.QuestionNumber" />
+                                        <input type="radio" @((key.KeyAnswer == "2") ? "checked" : "" ) name="question @key.QuestionNumber" />
+                                        <input type="radio" @((key.KeyAnswer == "3") ? "checked" : "" ) name="question @key.QuestionNumber" />
+                                        <input type="radio" @((key.KeyAnswer == "4") ? "checked" : "" ) name="question @key.QuestionNumber" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-6">
+                <h5 class="text-center p-2">پاسخ دانش آموز</h5>
+                <div class="table-responsive">
+                    <table class="table text-center" style="direction: ltr;">
+                        <thead>
+                            <tr>
+                                <th style="width: 145px"></th>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Item1)
+                            {
+                                <tr class="hidden">
+                                    <td>@item.AnswerNumber</td>
+                                    <td colspan="4" style="padding: 10px 0">
+                                        <input type="radio" @((item.AnswerChecked == "1") ? "checked" : "" ) name="answer @item.AnswerNumber" />
+                                        <input type="radio" @((item.AnswerChecked == "2") ? "checked" : "" ) name="answer @item.AnswerNumber" />
+                                        <input type="radio" @((item.AnswerChecked == "3") ? "checked" : "" ) name="answer @item.AnswerNumber" />
+                                        <input type="radio" @((item.AnswerChecked == "4") ? "checked" : "" ) name="answer @item.AnswerNumber" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row my-2 p-3 correctTest">
+    <header class="py-4">
+        <h4>تصحیح آزمون</h4>
+    </header>
+    <form class="col-12" method="post" href="/AdminPanel/Test/EditCorrectTest/@ViewBag.StudentId/@ViewBag.TestId/@ViewBag.TestFile/@ViewBag.TestTitle">
+        <div class="table-responsive">
+            <table class="table table-bordered overflow-auto">
+                <thead>
+                    <tr>
+                        <th class="text-center">درس</th>
+                        <th class="text-center">تعداد سوال(تستی و تشریحی)</th>
+                        <th class="text-center">صحیح</th>
+                        <th class="text-center">غلط</th>
+                        <th class="text-center">سفید</th>
+                        <th class="text-center">درصد کل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Item6)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <input type="text" name="parameters" value="@item.LessonName" class="text-center" style="pointer-events:none;border:none" />
+                            </td>
+                            <td class="text-center">
+                                <input type="text" name="parameters" value="@item.TestCounts" class="text-center" style="pointer-events:none;border:none" />
+                            </td>
+                            <td class="text-center">
+                                <input type="text" name="parameters" value="@item.CorrectAnswers" class="text-center" style="pointer-events:none;border:none" />
+                            </td>
+                            <td class="text-center">
+                                <input type="text" name="parameters" value="@item.WrongAnswers" class="text-center" style="pointer-events:none;border:none" />
+                            </td>
+                            <td class="text-center">
+                                <input type="text" name="parameters" value="@item.NoCheckedAnswers" class="text-center" style="pointer-events:none;border:none" />
+                            </td>
+                            <td class="text-center" style="direction: ltr">
+                                <input type="text" name="parameters" value="@item.Percent.ToString("0.00") %" class="text-center" style="pointer-events:none;border:none" />
+                            </td>
+                        </tr>
+                        <input type="hidden" value="@item.TestCounts" class="testCounts" />
+                        <input type="hidden" value="@item.CorrectAnswers" class="correctAnswers" />
+                        <input type="hidden" value="@item.WrongAnswers" class="wrongAnswers" />
+                        <input type="hidden" value="@item.NoCheckedAnswers" class="noCheckedAnswers" />
+                    }
+                    <tr>
+                        <td class="text-center">مجموع</td>
+                        <td class="text-center" id="testsCount"></td>
+                        <td class="text-center" id="correctSum"></td>
+                        <td class="text-center" id="wrongSum"></td>
+                        <td class="text-center" id="noCheckedSum"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-right py-3">
+            <button type="submit" class="btn btn-success text-white">ثبت نمرات</button>
+        </div>
+    </form>
+</div>
+@section Scripts
+{
+    <script src="/AdminPanel/js/AdminScripts.js" asp-append-version="true"></script>
+}

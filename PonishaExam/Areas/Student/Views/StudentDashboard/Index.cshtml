@@ -1,0 +1,75 @@
+﻿@model Tuple<List<TestsViewModel>, StudentDashboardViewModel, List<double>>
+@{
+    ViewData["Title"] = "صفحه اصلی";
+    double[] scores = Model.Item3.ToArray();
+}
+<div class="page-content pb-4 mb-4">
+    <div class="grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h6 class="card-title">آزمون های در حال برگزاری (@Model.Item2.ActiveTestCount آزمون)</h6>
+                </div>
+                <div class="table-responsive pt-3" style="max-height:500px">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    عنوان آزمون
+                                </th>
+                                <th class="text-center">
+                                    کد آزمون
+                                </th>
+                                <th class="text-center">
+                                    تعداد سوال
+                                </th>
+                                <th class="text-center">
+                                    قیمت آزمون(تومان)
+                                </th>
+                                <th class="text-center">
+                                    مدت زمان
+                                </th>
+                                <th class="text-center">
+                                    شروع آزمون
+                                </th>
+                                <th class="text-center">
+                                    اتمام آزمون
+                                </th>
+                                <th class="text-center">
+                                    تاریخ آزمون
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Item1)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.TestTitle</td>
+                                    <td class="text-center">@item.TestCode</td>
+                                    <td class="text-center">@item.QuestionCounts</td>
+                                    <td class="text-center">@item.TestPrice</td>
+                                    <td class="text-center">@item.TestDuration</td>
+                                    <td class="text-center">@item.StartTime</td>
+                                    <td class="text-center">@item.EndTime</td>
+                                    <td class="text-center">@item.TestDayTime</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white d-flex justify-content-center mx-auto py-4">
+        <div id="StudentChart" style="height:350px;width:900px">
+
+        </div>
+    </div>
+</div>
+<input type="hidden" id="scoresCount" value="@scores.Length"/>
+<input type="hidden" id="scores" value="@ViewBag.Scores"/>
+@section Scripts{
+    <script src="/js/StudentChart.js" asp-append-version="true"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+}

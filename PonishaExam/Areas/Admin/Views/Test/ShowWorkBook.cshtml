@@ -1,0 +1,125 @@
+﻿@model Tuple<List<WorkBookViewModel>, WorkBookInfoViewModel>
+@{
+    ViewData["Title"] = "مشاهده کارنامه";
+}
+<div class="row justify-content-between my-1 testsContainer p-3">
+    <a class="btn btn-success" href="/AdminPanel/Test/WorkBookRefresh/@ViewBag.StudentId/@ViewBag.TestId/@ViewBag.TestTitle/@ViewBag.TestFile">
+        بروزرسانی <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-ccw"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
+    </a>
+    <a class="d-inline-block text-black" href="/AdminPanel/Test/RefreshParticipants/@ViewBag.TestId/@ViewBag.TestTitle/@ViewBag.TestFile">
+        شرکت کنندگان
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+    </a>
+</div>
+<div class="testsContainer row d-flex justify-content-center flex-column align-content-center text-center p-4 my-1">
+    <h3 class="my-3">کارنامه آزمون آنلاین</h3>
+    <h5>@ViewBag.TestTitle</h5>
+</div>
+<div class="row testsContainer">
+    <ul class="row justify-content-around mb-0 w-100" style="list-style:none;padding:12px">
+        <li class="col-12 col-md-3 mb-2 mb-md-0">نام داوطلب : @Model.Item2.StudentName</li>
+        <li class="col-12 col-md-3 mb-2 mb-md-0">پایه تحصیلی : @Model.Item2.GradeName</li>
+        <li class="col-12 col-md-3 mb-2 mb-md-0">تاریخ شرکت در آزمون : @Model.Item2.TestDayTime</li>
+        <li class="col-12 col-md-3 mb-2 mb-md-0">تعداد شرکت کننده : @Model.Item2.StudentCounts</li>
+    </ul>
+</div>
+<div class="row testsContainer my-4">
+    <h5 class="alert alert-primary w-100 text-center">کارنامه کل</h5>
+    <div class="table-responsive">
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>تعداد سوال</th>
+                    <th>نمره</th>
+                    <th>رتبه</th>
+                    <th>تراز کل</th>
+                    <th>بالاترین تراز</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Item2.QuestionsCount</td>
+                    <td>@Model.Item2.AveragePercent.ToString(".00")</td>
+                    <td>@Model.Item2.StudentRank</td>
+                    <td>
+                        @if (Model.Item2.AverageLevel != 0)
+                        {
+                            @Model.Item2.AverageLevel.ToString("0000")
+                        }
+                    </td>
+                    <td>
+                        @if (Model.Item2.HighestLevel != 0)
+                        { 
+                            @Model.Item2.HighestLevel.ToString("0000")
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row testsContainer my-4">
+    <h5 class="alert alert-primary w-100 text-center">کارنامه دروس</h5>
+    <div class="table-responsive">
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>نام درس</th>
+                    <th>تعداد سوال</th>
+                    <th>صحیح</th>
+                    <th>غلط</th>
+                    <th>سفید</th>
+                    <th>درصد</th>
+                    <th>بالاترین درصد</th>
+                    <th>رتبه</th>
+                    <th>تراز</th>
+                    <th>بالاترین تراز</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Item1)
+                {
+                    <tr>
+                        <td>@item.LessonName</td>
+                        <td>@item.TestCounts</td>
+                        <td>@item.CorrectAnswers</td>
+                        <td>@item.WrongAnswers</td>
+                        <td>@item.NoCheckedAnswers</td>
+                        <td style="direction:ltr">@item.Percent %</td>
+                        <td style="direction:ltr">@item.HighestPercent %</td>
+                        <td>@item.Rank</td>
+                        <td>
+                            @if (item.Level is not 0)
+                            {
+                                @item.Level.ToString("0000")
+                            }
+                        </td>
+                        <td>
+                            @if (item.HighestLevel is not 0)
+                            {
+                                @item.HighestLevel.ToString("0000")
+                            }
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>مجموع</td>
+                    <td>@Model.Item2.QuestionsCount</td>
+                    <td>@Model.Item2.CorrectsCount</td>
+                    <td>@Model.Item2.WrongsCount</td>
+                    <td>@Model.Item2.NoCheckedsCount</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row testsContainer justify-content-start p-3">
+    <a class="btn btn-danger text-white mx-1" href="/Admin/PrintWorkBookPage/@Model.Item2.StudentId/@Model.Item2.TestId">چاپ کارنامه</a>
+    <a class="btn btn-primary text-white" onclick="AdminActiveShowing(@Model.Item2.StudentId,@Model.Item2.TestId)">فعال کردن برای دانش آموز</a>
+</div>
+@section Scripts{
+    <script src="/js/AdminScripts.js" asp-append-version="true"></script>
+}

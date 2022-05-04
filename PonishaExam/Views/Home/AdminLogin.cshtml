@@ -1,0 +1,140 @@
+﻿@model RequestLoginViewModel
+@{
+    ViewData["Title"] = "ورود اساتید";
+}
+@section Css{
+    <link rel="stylesheet" href="/LoginMaster/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/LoginMaster/css/owl.carousel.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/LoginMaster/css/bootstrap.min.css">
+    <!-- Style -->
+    <link rel="stylesheet" href="/LoginMaster/css/style.css" asp-append-version="true">
+    <link rel="stylesheet" href="/LoginMaster/css/masterStyles.css" asp-append-version="true" />
+}
+@section Navbar{
+    <a class="btn btn-outline-light" asp-controller="Home" asp-action="LoginStudent">ورود دانش آموزان</a>
+}
+<div class="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 contents">
+                <div class="row justify-content-center loginBoxes">
+                    <div class="col-md-6 loginBox" id="masterBox">
+                        <div>
+                            <div class="form-block h-100">
+                                <div class="mb-4 text-right">
+                                    <h3><small>ورود اساتید به</small> <strong>آزمون آنلاین</strong></h3>
+                                </div>
+                                <form asp-controller="Home" asp-action="MasterLogin" method="post">
+                                    <input type="hidden" name="master" value="master" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group first" style="background-color: transparent; border-bottom: none;font-size: 15px">
+                                        <label for="username" style="position: absolute; right: 15px">کد ملی</label>
+                                        <input type="text" asp-for="LoginMaster.Code" class="form-control text-right" id="username">
+                                    </div>
+                                    <div class="mb-2 d-flex pr-2">
+                                        <span asp-validation-for="LoginMaster.Code" class="warning-styles text-danger ml-auto"></span>
+                                    </div>
+                                    <div class="form-group last" style="background-color: transparent; border-bottom: none">
+                                        <label for="password" style="position: absolute; right: 15px">گذرواژه</label>
+                                        <input type="password" asp-for="LoginMaster.Password" class="form-control text-right" id="password">
+                                    </div>
+                                    <div class="d-flex pr-2 mb-4">
+                                        <span asp-validation-for="LoginMaster.Password" class="warning-styles text-danger ml-auto"></span>
+                                    </div>
+                                    <div class="d-flex mb-5 align-items-center justify-content-end">
+                                        <label class="control control--checkbox mb-0">
+                                            <span class="caption">مرا به خاطر بسپار</span>
+                                            <input type="checkbox" asp-for="LoginMaster.SaveMe" checked="checked" />
+                                            <div class="control__indicator"></div>
+                                        </label>
+                                    </div>
+                                    <input type="submit" value="ورود" class="btn btn-pill text-white btn-block btn-primary mb-4">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 loginBox active">
+                        <div>
+                            <div class="form-block h-100">
+                                @if (ViewBag.error != null)
+                                {
+                                    <div class="col-12 alert alert-danger text-center">@ViewBag.error</div>
+                                }
+                                <div class="mb-4 text-right">
+                                    <h3><small>ورود مدیران به</small> <strong>آزمون آنلاین</strong></h3>
+                                </div>
+                                <form asp-controller="Home" asp-action="AdminLogin" method="post">
+                                    <input type="hidden" name="admin" value="admin" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group first" style="background-color: transparent; border-bottom: none;font-size: 15px">
+                                        <label for="username" style="position: absolute; right: 15px">کد ملی</label>
+                                        <input type="text" asp-for="LoginAdmin.AdminCode" class="form-control text-right" id="username">
+                                    </div>
+                                    <div class="mb-2 d-flex pr-2">
+                                        <span asp-validation-for="LoginAdmin.AdminCode" class="warning-styles text-danger ml-auto"></span>
+                                    </div>
+                                    <div class="form-group last" style="background-color: transparent; border-bottom: none">
+                                        <label for="password" style="position: absolute; right: 15px">گذرواژه</label>
+                                        <input type="password" asp-for="LoginAdmin.AdminPassword" class="form-control text-right" id="password">
+                                    </div>
+                                    <div class="d-flex pr-2 mb-4">
+                                        <span asp-validation-for="LoginAdmin.AdminPassword" class="warning-styles text-danger ml-auto"></span>
+                                    </div>
+                                    <div class="d-flex mb-5 align-items-center justify-content-end">
+                                        <label class="control control--checkbox mb-0">
+                                            <span class="caption">مرا به خاطر بسپار</span>
+                                            <input type="checkbox" asp-for="LoginAdmin.SaveMe" checked="checked" />
+                                            <div class="control__indicator"></div>
+                                        </label>
+                                    </div>
+                                    <input type="submit" value="ورود" class="btn btn-pill text-white btn-block btn-primary mb-4">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="indicator p-4 d-flex justify-content-center">
+                    <div class="mx-1 indicator-btn" data-login="0"></div>
+                    <div class="mx-1 indicator-btn active" data-login="1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="@ViewBag.Master" id="master" />
+@section Scripts
+{
+    <script src="/LoginMaster/js/jquery-3.3.1.min.js"></script>
+    <script src="/LoginMaster/js/popper.min.js"></script>
+    <script src="/LoginMaster/js/bootstrap.min.js"></script>
+    <script src="/LoginMaster/js/main.js"></script>
+    <script>
+        const loginBoxes = document.querySelector('.loginBoxes').children;
+        const indicator = document.querySelectorAll('.indicator-btn');
+        const master = document.querySelector('#master').value;
+        console.log(master);
+        const masterBox = document.querySelector('#masterBox');
+        for (i = 0; i < indicator.length; i++) {
+            indicator[i].addEventListener('click', function () {
+                for (n = 0; n < indicator.length; n++) {
+                    indicator[n].classList.remove('active');
+                }
+                this.classList.add('active');
+                for (j = 0; j < loginBoxes.length; j++) {
+                    loginBoxes[j].classList.remove('active');
+                }
+                let index = this.getAttribute('data-login');
+                loginBoxes[index].classList.add('active');
+            });
+        }
+        if (master === 'master') {
+            console.log('master');
+            for (z = 0; z < loginBoxes.length; z++) {
+                loginBoxes[j].classList.remove('active');
+            }
+            masterBox.classList.add('active');
+        }
+
+    </script>
+}

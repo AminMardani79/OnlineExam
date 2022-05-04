@@ -1,0 +1,183 @@
+﻿@model EditTestViewModel
+@{
+    ViewData["Title"] = "ویرایش آزمون";
+}
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="d-flex justify-content-end px-4">
+                <a class="d-inline-block mt-3 text-black" href="/AdminPanel/Test">
+                    آزمون ها
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <div class="card-body pt-0">
+                <h6 class="card-title">ویرایش آزمون</h6>
+                <form asp-controller="Test" asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="TestId"/>
+                    <input type="hidden" asp-for="FilePath"/>
+                    <input type="hidden" asp-for="TestCode"/>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="control-label">عنوان آزمون</label>
+                            <input type="text" asp-for="TestTitle" class="form-control" placeholder="عنوان آزمون را وارد کنید">
+                            <span class="text-danger" asp-validation-for="TestTitle"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>انتخاب تاریخ آزمون:</label>
+
+                            <div class="input-group position-relative">
+                                <div class="input-group-prepend" style="position: absolute; right: 0; z-index: 10; height: 100%;">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <input asp-for="TestDayTime" type="text" class="form-control w-100 pr-5" DatePicker="1">
+                                </div>
+                            </div>
+                            <span class="text-danger" asp-validation-for="TestDayTime"></span>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group col-4">
+                            <label class="control-label">پایه تحصیلی</label>
+                            <select class="form-control" id="grade" asp-for="GradeId" asp-items="@ViewBag.Grades"></select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label class="control-label">دروس</label>
+                            <select class="form-control" id="lesson" asp-for="LessonId" asp-items="@ViewBag.Lessons">
+                                <option value="0">درس مورد نظر را انتخاب کنید</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label class="control-label">مدرسین</label>
+                            <select class="form-control" id="teacher" asp-for="TeacherId" asp-items="@ViewBag.Teachers">
+                                <option value="0">مدرس مورد نظر را انتخاب کنید</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>ساعت شروع آزمون</label>
+                            <div class="input-group clockpicker">
+                                <input type="text" asp-for="StartTest" class="form-control " placeholder="ساعت شروع آزمون">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                            <span class="text-danger" asp-validation-for="StartTest"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>ساعت اتمام آزمون</label>
+                            <div class="input-group clockpicker">
+                                <input type="text" asp-for="EndTest" class="form-control " placeholder="ساعت اتمام آزمون">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                            <span class="text-danger" asp-validation-for="EndTest"></span>
+
+                        </div>
+                        <div class="form-group col-6">
+                            <label>مدت زمان آزمون</label>
+                            <div class="input-group clockpicker">
+                                <input type="text" asp-for="TestDuration" class="form-control " placeholder="مدت زمان آزمون">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                            <span class="text-danger" asp-validation-for="TestDuration"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>قیمت آزمون( تومان )</label>
+                            <div class="input-group">
+                                <input type="number" asp-for="TestPrice" class="form-control" min="0">
+                            </div>
+                            <span class="text-danger" asp-validation-for="TestPrice"></span>
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="control-label">توضیح آزمون</label>
+                            <textarea asp-for="TestDescription" id="maxlength-textarea" class="form-control" maxlength="300" rows="8" placeholder="توضیحات آزمون را وارد کنید"></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">بارگزاری فایل جدید</h6>
+                                    <div class="dropify-wrapper">
+                                        <div class="dropify-message">
+                                            <span class="file-icon">
+                                                <p>فایل خود را کشیده و اینجا رها کنید یا برای انتخاب فایل کلیک کنید</p>
+                                            </span>
+                                            <p class="dropify-error">اوه! خطایی رخ داده است</p>
+                                        </div>
+                                        <div class="dropify-loader"></div>
+                                        <div class="dropify-errors-container">
+                                            <ul></ul>
+                                        </div>
+                                        <input type="file" asp-for="TestFile" id="myDropify" class="border">
+                                        <button type="button" class="dropify-clear">حذف</button>
+                                        <div class="dropify-preview">
+                                            <span class="dropify-render"></span>
+                                            <div class="dropify-infos">
+                                                <div class="dropify-infos-inner">
+                                                    <p class="dropify-filename">
+                                                        <span class="file-icon"></span>
+                                                        <span class="dropify-filename-inner"></span>
+                                                    </p>
+                                                    <p class="dropify-infos-message">برای جایگزینی فایل خود را کشیده و اینجا رها کنید یا کلیک کنید</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">فایل بارگذاری شده</h6>
+                                    <a href="/AdminPanel/DownloadFile/@Model.FilePath">
+                                        <div class="dropify-wrapper">
+                                            <div class="dropify-message">
+                                                <span class="">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download-cloud"><polyline points="8 17 12 21 16 17"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path></svg>
+                                                    <p>برای مشاهده فایل آن را دانلود کنید</p>
+                                                </span>
+                                                <p class="dropify-error">اوه! خطایی رخ داده است</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 py-2">
+                            نمره منفی
+                            <input type="checkbox" asp-for="NegativePoint" />
+                        </div>
+                        <div class="col-md-12 py-2">
+                            آیا آزمون جامع است؟
+                            <input type="checkbox" asp-for="IsComprehensiveTest" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/Percian-Calender/src/kamadatepicker.min.js"></script>
+    <script type="text/javascript" src="~/clock/dist/bootstrap-clockpicker.min.js"></script>
+    <script type="text/javascript" src="/clock/assets/js/scripts.js"></script>
+    <script src="/js/AdminScripts.js" asp-append-version="true"></script>
+
+}
+@section Css
+{
+    <link rel="stylesheet" href="~/Percian-Calender/style/kamadatepicker.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/clock/dist/bootstrap-clockpicker.min.css">
+    <link rel="stylesheet" href="/clock/assets/css/styles.css" />
+    <link rel="stylesheet" href="/css/AdminStyles.css" asp-append-version="true" />
+}

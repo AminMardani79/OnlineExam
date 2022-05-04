@@ -1,0 +1,119 @@
+﻿.chooseImage {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.showNewImage {
+    width: 100px;
+    height: 100px;
+}
+
+.dropify-wrapper > .dropify-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.searchTitle {
+    padding-left: 65px;
+    border: none;
+    border-bottom: 1px solid #e8ebf1;
+}
+
+.showBtn {
+    background-color: #7272fc;
+    border: none;
+    color: #ffffff;
+    padding: 7px;
+    border-radius: 2px;
+    box-shadow: 0 0 2px #7272fc;
+}
+
+.removeFilter-btn {
+    background-color: #edae12;
+    border: none;
+    color: #ffffff;
+    padding: 7px;
+    border-radius: 2px;
+    box-shadow: 0 0 2px #edae12;
+}
+/*Question styles*/
+.testBox {
+    opacity: .4;
+    animation: fade-out .5s ease-in-out;
+    cursor: no-drop;
+}
+    .testBox > div {
+        border: 1px solid #e8ebf1;
+        box-shadow: 0 0 13px #e8ebf1;
+        height: 100%;
+        pointer-events: none;
+    }
+    @keyframes fade-out {
+        0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .4;
+    }
+}
+.indicator div {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #727cf5;
+    cursor: pointer;
+}
+.testBox.active {
+    opacity: 1;
+    animation: fade-in .5s ease-in-out;
+    cursor: context-menu;
+}
+.testBox.active > div {
+    pointer-events: auto;
+}
+    @keyframes fade-in {
+        0% {
+        opacity: .4;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+.indicator div.active {
+    background-color: #727cf5;
+}
+.testsContainer, .correctTest {
+    background-color: white;
+    box-shadow: 0 0 5px #e1e1e1;
+}
+
+.tests {
+    border-left: 1px solid gray;
+}
+
+.hidden {
+    opacity: .6;
+    pointer-events: none;
+}
+
+.testsContainer input[type=radio] {
+    width: 33px;
+    height: 21px;
+}
+
+.testsContainer textarea {
+    width: 100%;
+    height: 130px;
+    padding: 10px;
+}
+
+.question {
+    height: 160px;
+    overflow: auto;
+}

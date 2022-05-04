@@ -1,0 +1,66 @@
+﻿@model EditStudentViewModel
+@{
+    ViewData["Title"] = "ویرایش پروفایل";
+}
+<div class="row p-5">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="d-flex justify-content-end px-4">
+                <a class="d-inline-block mt-3 text-black" href="/StudentPanel/Profile">
+                    پروفایل
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <div class="card-body pt-0">
+                <h6 class="card-title">ویرایش پروفایل</h6>
+                <form asp-area="Student" asp-controller="StudentDashboard" asp-action="EditProfile" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="StudentId" />
+                    <input type="hidden" asp-for="StudentPathImage" />
+                    <input type="hidden" asp-for="Active" />
+                    <input type="hidden" asp-for="GradeId" />
+                    <input type="hidden" asp-for="StudentOldPassword" />
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <img id="NewImg" src="~/image/@Model.StudentPathImage" class="img-thumbnail mr-1 mb-2 showNewImage rounded-circle" />
+                            <br />
+                            <label for="imgUp" class="control-label ml-2 chooseImage">
+                                انتخاب تصویر<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download-cloud"><polyline points="8 17 12 21 16 17"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path></svg>
+                            </label>
+                            <input type="file" asp-for="StudentAvatar" class="d-none" id="imgUp" onchange="ChangeImage(this);" />
+                            <span asp-validation-for="StudentAvatar" class="text-danger"></span><br />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">دانش آموز</label>
+                            <input type="text" asp-for="StudentName" class="form-control" placeholder="نام را وارد کنید">
+                            <span class="text-danger" asp-validation-for="StudentName"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">ایمیل</label>
+                            <input type="text" asp-for="StudentMail" class="form-control" placeholder="ایمیل را وارد کنید">
+                            <span class="text-danger" asp-validation-for="StudentMail"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">شماره تماس</label>
+                            <input type="text" asp-for="StudentPhoneNumber" class="form-control" placeholder="شماره تماس را وارد کنید">
+                            <span class="text-danger" asp-validation-for="StudentPhoneNumber"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">رمز عبور</label>
+                            <input type="text" asp-for="StudentPassword" class="form-control" placeholder="رمز عبور جدید را وارد کنید">
+                            <span class="text-danger" asp-validation-for="StudentPassword"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">کد ملی</label>
+                            <input type="text" asp-for="StudentNationalCode" class="form-control" placeholder="کد ملی را وارد کنید">
+                            <span class="text-danger" asp-validation-for="StudentNationalCode"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

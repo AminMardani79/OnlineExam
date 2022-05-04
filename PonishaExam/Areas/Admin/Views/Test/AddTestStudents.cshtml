@@ -1,0 +1,42 @@
+﻿@model SelectStudentViewModel
+@{
+    ViewData["Title"] = "انتخاب دانش آموز";
+    List<TestStudentsViewModel> models = ViewBag.StudentList as List<TestStudentsViewModel>;
+}
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="d-flex justify-content-end px-4">
+                <a class="d-inline-block mt-3 text-black" href="/AdminPanel/Test">
+                    آزمون ها
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <div class="card-body pt-0">
+                <form asp-area="Admin" asp-controller="Test" asp-action="AddTestStudents" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="TestId" />
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect2">انتخاب دانش آموز</label>
+                        <div class="py-3">
+                            <input type="checkbox" id="selectAll" /> انتخاب همه دانش آموزان
+                        </div>
+                        <select multiple="" asp-for="items" name="Items" class="form-control" id="selectBox">
+                            @foreach (var item in models)
+                            {
+                                <option value="@item.StudentId">@item.StudentName</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="/js/FinalScripts.js" asp-append-version="true"></script>
+}

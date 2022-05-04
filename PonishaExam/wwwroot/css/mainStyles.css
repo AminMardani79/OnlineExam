@@ -1,0 +1,44 @@
+﻿.showAnswers th {
+    padding: 15px 5px !important;
+}
+
+.showAnswers input[type="radio"] {
+    margin: 0 3px;
+}
+
+.showAnswers .descriptive {
+    width: 500px;
+    height: 150px;
+    border: 1px solid gray !important;
+    text-align: right;
+    padding: 15px;
+}
+
+.showAnswers .scrollable {
+    overflow-y: auto;
+    height: 450px;
+}
+
+.showAnswers .hidden {
+    opacity: .6;
+    pointer-events: none;
+}
+
+
+.enterTest .number:before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: -10px;
+    clip-path: polygon(0 9%, 0 82%, 51% 45%);
+    border: 1px solid red;
+    background: red;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+}
+
+.enterTest .number.unChecked:before {
+    opacity: 1;
+    transition: all .3s ease-in-out;
+}

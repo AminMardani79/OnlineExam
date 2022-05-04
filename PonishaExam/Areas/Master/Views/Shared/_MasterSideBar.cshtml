@@ -1,0 +1,63 @@
+﻿<nav class="sidebar">
+    <div class="sidebar-header">
+        <a href="#" class="sidebar-brand">
+            Noble<span>UI</span>
+        </a>
+        <div class="sidebar-toggler not-active">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="sidebar-body">
+        <ul class="nav">
+            <li class="nav-item nav-category">اصلی</li>
+            <li class="nav-item">
+                <a href="/Master" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">داشبورد</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#Students" role="button" aria-expanded="false"
+                   aria-controls="Teachers">
+                    <i class="mdi mdi-account-multiple-outline
+"></i>
+                    <span class="link-title">مدیریت دانش آموزان</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="Students">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a asp-controller="Student" asp-area="Master" asp-action="Index" class="nav-link text-secondary">لیست دانش آموزان</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#Exams" role="button" aria-expanded="false"
+                   aria-controls="Teachers">
+                    <i class="mdi mdi-book-open-page-variant"></i>
+                    <span class="link-title">مدیریت آزمون ها</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="Exams">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a asp-controller="Exam" asp-area="Master" asp-action="Exams" class="nav-link text-secondary">لیست آزمون ها</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="/Master/ShowWorkBooks" class="nav-link">
+                    <i class="mdi mdi-calendar-text
+"></i>
+                    <span class="link-title">کارنامه ها</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

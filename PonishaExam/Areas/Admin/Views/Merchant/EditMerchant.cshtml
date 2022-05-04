@@ -1,0 +1,24 @@
+﻿@model EditMerchantViewModel
+@{
+    ViewData["Title"] = "کد مرچنت";
+}
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <h6 class="card-title my-auto">ویرایش کد مرچنت</h6>
+                </div>
+                <form method="post" href="/Admin/EditMerchant">
+                    <input type="hidden" asp-for="MerchantId" />
+                    <div class="form-group col-6 pr-0">
+                        <label class="control-label">کد مرچنت</label>
+                        <input type="text" asp-for="MerchantKey" class="form-control" placeholder="کد مرچنت را وارد کنید">
+                        <span class="text-danger" asp-validation-for="MerchantKey"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit">ویرایش</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

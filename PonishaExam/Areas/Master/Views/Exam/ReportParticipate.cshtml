@@ -1,0 +1,50 @@
+﻿@model ReportTestViewModel
+@{
+    ViewData["Title"] = "گزارش آزمون";
+}
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card p-3">
+            <div class="d-flex justify-content-end px-4">
+                <a class="d-inline-block text-black" href="/Master/Exam ">
+                    آزمون ها
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card py-2 position-relative" style="min-height:500px">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="pb-2">گزارش حضور در آزمون</h5>
+                <div class="">
+                    <div id="particChartContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card py-2 position-relative" style="min-height:500px">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="pb-2">گزارش تکمیل آزمون</h5>
+                <div class="">
+                    <div id="finishedChartContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="@Model.Participated" id="participated" />
+<input type="hidden" value="@Model.NotParticipated" id="notParticipated" />
+<input type="hidden" value="@Model.FinishedStudents" id="finishedStudents" />
+<input type="hidden" value="@Model.UnFinishedStudents" id="unFinishedStudents" />
+@section Scripts{
+    <script src="/js/FinalScripts.js" asp-append-version="true"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+}

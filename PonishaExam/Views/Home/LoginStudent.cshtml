@@ -1,0 +1,57 @@
+﻿@model LoginStudentViewModel
+@{
+    ViewData["Title"] = "ورود دانش آموز";
+}
+@section Navbar{ 
+    <a class="btn btn-outline-light" asp-controller="Home" asp-action="MasterLogin">ورود مدیران / اساتید</a>
+}
+<div class="content" style="height: 100vh">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="/LoginStudent/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
+            </div>
+            <div class="col-md-6 contents">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        @if (ViewBag.ErrorAlert != null)
+                        {
+                            <div class="alert alert-danger text-center">
+                                @ViewBag.ErrorAlert
+                            </div>
+                        }
+                        <div class="mb-4">
+                            <h3 class="text-right">ورود</h3>
+                            <p class="mb-4 text-right">به سامانه جامع آزمون آنلاین خوش آمدید</p>
+                        </div>
+                        <form method="post" asp-controller="Home" asp-action="LoginStudent">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group first">
+                                <label for="username" style="right: 15px">کد ملی</label>
+                                <input type="text" asp-for="StudentNationalCode" class="form-control" style="direction: rtl; font-size: 15px" id="username">
+                            </div>
+                            <div class="mb-2 d-flex pr-2">
+                                <span asp-validation-for="StudentNationalCode" class="warning-styles text-danger ml-auto"></span>
+                            </div>
+                            <div class="form-group last">
+                                <label for="password" class="text-right" style="right: 15px">رمز عبور</label>
+                                <input type="password" asp-for="StudentPassword" class="form-control" style="direction: rtl" id="password">
+                            </div>
+                            <div class="mb-3 d-flex pr-2">
+                                <span asp-validation-for="StudentPassword" class="warning-styles text-danger ml-auto"></span>
+                            </div>
+                            <div class="d-flex mb-5 justify-content-end align-items-center">
+                                <label class="control control--checkbox mb-0">
+                                    <span class="caption">مرا به خاطر بسپار</span>
+                                    <input asp-for="RememberMe" type="checkbox" checked="checked"/>
+                                    <div class="control__indicator"></div>
+                                </label>
+                            </div>
+                            <input type="submit" value="ورود" class="btn btn-block btn-primary mb-5">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

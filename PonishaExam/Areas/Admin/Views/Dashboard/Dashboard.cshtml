@@ -1,0 +1,186 @@
+﻿@model Tuple<List<TestsViewModel>, AdminDashboardViewModel>
+@{
+    ViewData["Title"] = "داشبورد";
+}
+@section Css{
+    <style>
+        .dashboard-icon i {
+            font-size: 50px;
+        }
+    </style>
+}
+<div class="row">
+    <div class="col-md-6 col-lg-3 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between align-items-baseline pb-2">
+                            <h6 class="card-title mb-0">دانش آموزان</h6>
+                        </div>
+                        <div>
+                            <h3 class="mb-2">@Model.Item2.StudentsCount</h3>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center">
+                        <div class="dashboard-icon">
+                            <i class="fa fa-users"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between align-items-baseline pb-2">
+                            <h6 class="card-title mb-0">تعداد کارنامه</h6>
+                        </div>
+                        <div>
+                            <h3 class="mb-2">@Model.Item2.WorkBooksCount</h3>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center">
+                        <div class="dashboard-icon">
+                            <i class="fa fa-drivers-license-o"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between align-items-baseline pb-2">
+                            <h6 class="card-title mb-0">تعداد آزمون</h6>
+                        </div>
+                        <div>
+                            <h3 class="mb-2">@Model.Item2.TestsCount</h3>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center">
+                        <div class="dashboard-icon">
+                            <i class="fa fa-list-ul"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between align-items-baseline pb-2">
+                            <h6 class="card-title mb-0">نوع کاربر</h6>
+                        </div>
+                        <div>
+                            <h3 class="mb-2">مدیر</h3>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center">
+                        <div class="dashboard-icon">
+                            <i class="fa fa-id-badge"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h6 class="card-title">آزمون های در حال برگزاری (@Model.Item2.ActiveTestsCount آزمون)</h6>
+                </div>
+                <div class="table-responsive pt-3" style="max-height:500px">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    عنوان آزمون
+                                </th>
+                                <th class="text-center">
+                                    کد آزمون
+                                </th>
+                                <th class="text-center">
+                                    تعداد سوال
+                                </th>
+                                <th class="text-center">
+                                    قیمت آزمون (تومان)
+                                </th>
+                                <th class="text-center">
+                                    مدت زمان
+                                </th>
+                                <th class="text-center">
+                                    شروع آزمون
+                                </th>
+                                <th class="text-center">
+                                    اتمام آزمون
+                                </th>
+                                <th class="text-center">
+                                    تاریخ آزمون
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Item1)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.TestTitle</td>
+                                    <td class="text-center">@item.TestCode</td>
+                                    <td class="text-center">@item.QuestionCounts</td>
+                                    <td class="text-center">@item.TestPrice</td>
+                                    <td class="text-center">@item.TestDuration</td>
+                                    <td class="text-center">@item.StartTime</td>
+                                    <td class="text-center">@item.EndTime</td>
+                                    <td class="text-center">@item.TestDayTime</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card py-2 position-relative" style="min-height:500px">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="pb-2">گزارش حضور در آزمون در حال برگذاری</h5>
+                <div class="">
+                    <div id="particChartContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card py-2 position-relative" style="min-height:500px">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="pb-2">گزارش تکمیل آزمون در حال برگذاری</h5>
+                <div class="">
+                    <div id="finishedChartContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input  type="hidden" value="@Model.Item2.Participated" id="participated"/>
+<input  type="hidden" value="@Model.Item2.NotParticipated" id="notParticipated"/>
+<input  type="hidden" value="@Model.Item2.FinishedStudents" id="finishedStudents"/>
+<input  type="hidden" value="@Model.Item2.UnFinishedStudents" id="unFinishedStudents"/>
+@section Scripts{
+    <script src="/js/DashboardScripts.js" asp-append-version="true"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+}

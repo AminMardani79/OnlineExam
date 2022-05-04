@@ -1,0 +1,42 @@
+﻿<nav class="bottom-navbar">
+    <div class="container">
+        <ul class="nav page-navigation justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="/StudentPanel">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="menu-title">داشبورد</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="mdi mdi-book link-icon"></i>
+                    <span class="menu-title mr-1">دروس</span>
+                    <i class="link-arrow"></i>
+                </a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        @await Component.InvokeAsync("Lesson")
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/StudentPanel/BoughtTests">
+                    <i class="fa fa-align-justify link-icon"></i>
+                    <span class="menu-title mr-1">خریداری شده</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/StudentPanel/Basket">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="width:17px;height:15px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag link-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span class="menu-title mr-1">سبد خرید</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/StudentPanel/WorkBooks">
+                    <i class="mdi mdi-calendar-text link-icon"></i>
+                    <span class="menu-title mr-1">کارنامه ها</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

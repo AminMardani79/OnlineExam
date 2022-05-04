@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewData["Title"] | پنل دانش آموزان</title>
+    <partial name="_HeaderRefrences" />
+    @RenderSection("Css", false)
+</head>
+
+<body class="rtl">
+    <div class="main-wrapper">
+        <!-- partial:partials/_navbar.html -->
+        <div class="horizontal-menu">
+            <partial name="_TopNavbar" />
+            <partial name="_BottomNavbar" />
+        </div>
+        <!-- partial -->
+
+        <div class="page-wrapper" style="overflow-x: hidden">
+            @RenderBody()
+        </div>
+    </div>
+    <partial name="_FooterRefrences" />
+    @RenderSection("Scripts", false)
+</body>
+
+</html>

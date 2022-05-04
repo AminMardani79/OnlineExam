@@ -1,0 +1,89 @@
+﻿@model Tuple<List<ShowBasketViewModel>, double, string>
+@{
+    ViewData["Title"] = "سبد خرید";
+}
+<div class="grid-margin stretch-card p-5">
+    <div class="card">
+        <div class="card-body">
+            @if (Model.Item2 != 0 && Model.Item3 != "")
+            {
+                <section class="besket-content-section" id="Order">
+                    <div class="d-flex justify-content-start pr-4">
+                        <span>شماره فاکتور : @Model.Item3</span>
+                    </div>
+                    <div class="row mx-auto">
+                        <main class="col-12 col-lg-9">
+                            <!-- basket table -->
+                            <div class="table-responsive pt-3" style="max-height:500px">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">
+                                                عنوان آزمون
+                                            </th>
+                                            <th class="text-center">
+                                                کد آزمون
+                                            </th>
+                                            <th class="text-center">
+                                                قیمت آزمون(تومان)
+                                            </th>
+                                            <th class="text-center">
+                                                شروع آزمون
+                                            </th>
+                                            <th class="text-center">
+                                                اتمام آزمون
+                                            </th>
+                                            <th class="text-center">
+                                                تاریخ آزمون
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Item1)
+                                        {
+                                            <tr id="card_@item.DetailId">
+                                                <td class="text-center">
+                                                    <a class="btn btn-sm btn-danger text-white" onclick="RemoveDetail(@item.DetailId)">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">@item.TestTitle</td>
+                                                <td class="text-center">@item.TestCode</td>
+                                                <td class="text-center">@item.TestPrice</td>
+                                                <td class="text-center">@item.StartTest</td>
+                                                <td class="text-center">@item.EndTest</td>
+                                                <td class="text-center">@item.TestDayTime</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </main>
+                        <aside class="col-12 col-lg-3 pt-3 d-flex flex-column justify-content-start" style="height: 250px !important;">
+                            <header class="pb-3">
+                                <h4>مجموع کل سبد خرید</h4>
+                            </header>
+                            <div class="d-flex justify-content-between pb-3">
+                                <div>مجموع :</div>
+                                <div>@Model.Item2.ToString("#,0") تومان</div>
+                            </div>
+                            <div class="pt-3">
+                                <a class="text-white btn btn-success w-100" href="/Payment/@Model.Item2">پرداخت</a>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+            }
+            else
+            {
+                <div class="p-5 text-center">
+                    <h3>سبد خرید شما خالی است</h3>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="/js/Orders.js" asp-append-version="true"></script>
+}

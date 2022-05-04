@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "تایید پرداخت";
+}
+@section Navbar{
+    <a class="btn btn-outline-light" href="/">بازگشت به پنل کاربری</a>
+}
+@if (ViewBag.code != null)
+{
+    <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-success text-center" style="direction:rtl" role="alert">
+                        خرید شما با موفقیت ثبت شد :)
+                    </div>
+                    <table class="table table-bordered bg-whit table-hover" style="direction:rtl">
+                        <tbody>
+                            <tr class="bg-header text-center">
+                                <td>کد رهگیری سفارش </td>
+                                <td>
+                                    @ViewBag.code
+                                </td>
+                            </tr>
+                            <tr class="bg-header text-center">
+                                <td>شماره فاکتور </td>
+                                <td>
+                                    @ViewBag.OrderCode
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>قیمت </td>
+                                <td>@ViewBag.Price.ToString("#,0") تومان</td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>وضعیت </td>
+                                <td>پرداخت شده </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-danger text-center" style="direction:rtl" role="alert">
+                       خرید شما انجام نشد :(
+                    </div>
+                    <table class="table table-bordered bg-whit table-hover" style="direction:rtl">
+                        <tbody>
+                            <tr class="text-center">
+                                <td>وضعیت </td>
+                                <td>پرداخت نشده </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

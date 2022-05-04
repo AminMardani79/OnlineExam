@@ -1,0 +1,182 @@
+﻿@using PonishaExam.Helper
+@model EditTestViewModel
+@{
+    ViewData["Title"] = "آزمون";
+    var startTest = TimeSpan.Parse(Model.StartTest);
+    var nowDate = TimeSpan.Parse(DateTime.Now.ToString("HH:mm"));
+    var diffTime = nowDate - startTest;
+    var duration = TimeSpan.Parse(Model.TestDuration) - diffTime;
+    var hours = duration.Hours;
+    var minutes = duration.Minutes;
+}
+<section class="p-1 enterTest">
+    <form name="examForm" method="post" asp-area="Student" asp-controller="Answer" asp-action="CreateAnswer" enctype="multipart/form-data" class="row mx-0 px-0 justify-content-center">
+        <input type="hidden" name="studentId" value="@User.GetStudentId()" />
+        <input type="hidden" name="testId" value="@Model.TestId" />
+        <input type="hidden" name="lessonId" value="@ViewBag.LessonId" />
+        <div class="col-md-8 row">
+            <div class="col-12 stretch-card mb-2">
+                <div class="card">
+                    <ul class="row justify-content-around align-items-center p-2 mt-3" style="list-style-type: none; direction: rtl">
+                        <li class="col-6 col-md-2">
+                            نام کاربر : <span>@User.GetStudentName()</span>
+                        </li>
+                        <li class="col-6 col-md-3">
+                            عنوان آزمون : <span>@Model.TestTitle</span>
+                        </li>
+                        <li class="col-6 col-md-2">
+                            زمان آزمون : <span>@Model.TestDuration</span>
+                        </li>
+                        <li class="col-6 col-md-2">
+                            تعداد سوال : <span>@Model.AllQuestionCounts</span>
+                        </li>
+                        <li class="col-12 col-md-3">
+                            <a class="btn btn-primary text-white toggleFile"><span></span>نمایش pdf </a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 stretch-card File">
+                <div class="card">
+                    <embed src="/files/@Model.FilePath" style="height: 700px; width: 100%" />
+                </div>
+            </div>
+            @if (Model.DescriptiveQuestionCounts >= 1)
+            {
+                <div class="col-12 py-3">
+                    <h3 class="text-danger py-3">پاسخ نامه تشریحی</h3>
+                    <div class="row p-2 examBox" style="direction: rtl;">
+                        @for (var x = Model.QuestionCounts; x < Model.AllQuestionCounts; x++)
+                        {
+                            <input type="hidden" name="answerId" value="@(x + 1)" />
+                            <div class="col-md-6">
+                                <h5>@(x + 1)</h5>
+                                <textarea name="descriptiveAnswer" style="width: 100%; height: 120px"></textarea>
+                            </div>
+                        }
+                        <div class="col-12 py-2 row justify-content-between">
+                            <div class="form-group position-relative">
+                                <label for="imgUp" class="control-label ml-2 chooseImage" style="background-color: #fff; position: relative; z-index: 11">
+                                    بارگذاری پاسخ سوال<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download-cloud"><polyline points="8 17 12 21 16 17"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path></svg>
+                                </label>
+                                <input type="file" class="" name="fileUp" style="position: absolute; right: 48px; top: 5px; " id="imgUp" onchange="ChangeImage(this);" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="p-4 col-md-12">
+                <div class="d-flex examBox p-4 justify-content-center">
+                    <div class="mx-1">
+                        <button type="submit" class="btn btn-danger text-white">
+                            اتمام آزمون
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row mb-2 text-center examBox p-4" style="direction: ltr">
+                <div class="col-12 col-lg-5 d-flex justify-content-center flex-column mb-2 mb-lg-0">
+                    <div id="counter" class="text-center" style="font-size: 30px; letter-spacing: 3px; color: gray">
+
+                    </div>
+                    <button type="button" class="btn btn-primary mx-auto" style="width: 80%" data-toggle="modal" data-target="#exampleModalCenter">
+                        راهنما <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    </button>
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                        راهنما <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    در صورت تمایل میتوانید پاسخ سوال های تشریحی را در جایگاه مشخص شده آپلود کنید
+                                    <br />
+                                    توجه داشته باشید که پس از فشردن اتمام آزمون دیگر امکان بازگشت و ادامه آزمون وجود نخواهد داشت
+                                    <br />
+                                    در صورت تمایل برای خالی گذاشتن گزینه ای که از قبل تیک آن را زده اید بر روی مربع مشکی سمت راست هر ردیف کلیک کنید
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-7">
+                    <div class="p-1 mb-2">
+                        <input value="true" type="checkbox" id="showUnchecked">
+                        <label>گزینه های بی پاسخ</label>
+                    </div>
+                    <div>
+                        <a class="btn btn-danger text-white" href="/StudentPanel/Test/@Model.LessonId">
+                            بازگشت
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row examBox text-center">
+                <div class="d-flex flex-column align-items-center mx-auto pb-5" style="width: 70%">
+                    <div class="w-100 pt-2">
+                        <h4 class="text-danger py-2">پاسخنامه</h4>
+                        <p class="alert alert-danger">@Model.TestTitle</p>
+                    </div>
+                    <div class="table-responsive" style="max-height: 600px">
+                        <table class="table col-2 col-sm-1 mb-4 mb-sm-0 w-100 mx-auto" style="direction: ltr;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y: auto">
+                                @for (var i = 0; i < Model.QuestionCounts; i++)
+                                {
+                                    <input type="hidden" name="answerId" value="@(i + 1)" />
+                                    <tr class="radioRow position-relative">
+                                        <td class="number number-@(i+1)">@(i + 1)</td>
+                                        <td colspan="4" class="radioChecks-@(i + 1)" style="padding: 10px 0">
+                                            <input type="radio" value="1" name="radio-@(i + 1)" class="radioStyle radio-@(i + 1)" />
+                                            <input type="radio" value="2" name="radio-@(i + 1)" class="radioStyle radio-@(i + 1)" />
+                                            <input type="radio" value="3" name="radio-@(i + 1)" class="radioStyle radio-@(i + 1)" />
+                                            <input type="radio" value="4" name="radio-@(i + 1)" class="radioStyle radio-@(i + 1)" />
+                                        </td>
+                                        <td>
+                                            <svg onclick="UnCheckRow(@i)" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-square" style="cursor: pointer"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<input type="hidden" value="@Model.QuestionCounts" id="questionCounts" />
+<input type="hidden" value="@hours" id="Hours" />
+<input type="hidden" value="@minutes" id="Minutes" />
+@section Css{
+    <link rel="stylesheet" href="/css/mainStyles.css" asp-append-version="true" />
+}
+@section Scripts
+{
+    <script src="/js/FinalScripts.js" asp-append-version="true"></script>
+}

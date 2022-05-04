@@ -1,0 +1,72 @@
+﻿@model Tuple<List<AnswerViewModel>, List<AnswerViewModel>, string>
+@{
+    ViewData["Title"] = "پاسخ سوالات";
+}
+@section Css{
+    <link rel="stylesheet" href="/css/mainStyles.css" asp-append-version="true"/>
+}
+<div class="row showAnswers">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="d-flex justify-content-end px-4">
+                <a class="d-inline-block mt-3 text-black" href="/StudentPanel/Test/@ViewBag.LessonId">
+                    آزمون ها
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <div class="card-body pt-0">
+                <div class="d-flex">
+                    <h6 class="card-title ml-3">پاسخ های ثبت شده</h6>
+                    @if (Model.Item3 != null)
+                    {
+                        <a class="text-success" href="/StudentPanel/DownloadFile/@Model.Item3">فایل های آپلود شده</a>
+                    }
+                </div>
+                <section class="py-3 row justify-content-center" style="direction: ltr;">
+                    <div class="col-3 col-sm-2 mb-4 mb-sm-0 scrollable">
+                        <table class="table" style="direction: ltr;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 125px"></th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Item1)
+                                {
+                                    <tr class="hidden">
+                                        <td>@item.AnswerNumber</td>
+                                        <td colspan="4" style="padding: 10px 0">
+                                            <input type="radio" @((item.AnswerChecked == "1") ? "checked" : "") name="question @item.AnswerNumber" />
+                                            <input type="radio" @((item.AnswerChecked == "2") ? "checked" : "") name="question @item.AnswerNumber" />
+                                            <input type="radio" @((item.AnswerChecked == "3") ? "checked" : "") name="question @item.AnswerNumber" />
+                                            <input type="radio" @((item.AnswerChecked == "4") ? "checked" : "") name="question @item.AnswerNumber" />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    @if (Model.Item2 != null)
+                    {
+                        <div class="col-12 col-md-6 text-center scrollable hidden">
+                            @foreach (var item in Model.Item2)
+                            {
+                                <div>
+                                    <h5>@item.AnswerNumber</h5>
+                                    <textarea class="descriptive">@item.AnswerContext</textarea>
+                                </div>
+                            }
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

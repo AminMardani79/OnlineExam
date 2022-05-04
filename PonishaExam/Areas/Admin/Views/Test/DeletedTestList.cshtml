@@ -1,0 +1,180 @@
+﻿@model Tuple<List<TestsViewModel>, int, int>
+@{
+    ViewData["Title"] = "حذفیات آزمون ها";
+}
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card mb-1">
+        <div class="card py-3">
+            <h5 class="px-3"> <i class="fa fa-search"></i> جستجو</h5>
+            <hr />
+            <form class="row px-3" asp-controller="Test" asp-action="SearchDeletedTestList" method="get">
+                <div class="row col-xl-3 mb-2 mb-xl-0">
+                    <div class="col-md-12 mb-1">
+                        <input name="testTitle" id="testTitle" class="form-control searchTitle" placeholder="عنوان آزمون">
+                    </div>
+                    <div class="col-md-12">
+                        <input name="testCode" id="testCode" class="form-control searchTitle" placeholder="کد آزمون (اختیاری)">
+                    </div>
+                </div>
+                <div class="row col-xl-5  mb-2 mb-xl-0">
+                    <div class="col-md-12 mb-1 d-flex">
+                        <label class="align-self-center">از تاریخ :</label>
+                        <div style="position: relative; margin-right: 10px;width: 73%">
+                            <div class="input-group-prepend" style="position: absolute; top: 0; right: 1px; height: 91%; z-index: 10">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <input type="text" name="fromDate" id="fromDate" class="form-control w-100" DatePicker="1" style="padding-right: 50px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-1 d-flex">
+                        <label class="align-self-center">تا تاریخ :</label>
+                        <div style="position: relative;margin-right: 8px;width: 73%">
+                            <div class="input-group-prepend" style="position: absolute; top: 0; right: 2px; height: 91%; z-index: 10">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <input type="text" class="form-control w-100" name="toDate" id="toDate" DatePicker="1" style="padding-right: 50px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 row  mb-2 mb-xl-0">
+                    <div class="col-md-7">
+                        <label for="male">آزمون های فعال</label>
+                        <input type="radio" id="active" name="IsFinish" value="true"> <br />
+                        <label for="female">آزمون های غیر فعال</label>
+                        <input type="radio" id="off" name="IsFinish" value="false"> <br />
+                        <label for="other">همه</label>
+                        <input type="radio" id="all" name="IsFinish" checked value="All">
+                    </div>
+                    <div class="col-md-5 d-flex align-items-start">
+                        <input type="submit" class="showBtn ml-1" value="اعمال فیلتر" />
+                        <input type="button" class="removeFilter-btn" onclick="RemoveFilters()" value="حذف فیلتر ها" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="d-flex justify-content-end px-4 pb-2">
+                <a class="d-inline-block mt-3 text-black" href="/AdminPanel/Test">
+                    آزمون ها
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <div class="card-body pt-0">
+                <div class="table-responsive pt-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    عنوان آزمون
+                                </th>
+                                <th class="text-center">
+                                    کد آزمون
+                                </th>
+                                <th class="text-center">
+                                    تعداد سوال
+                                </th>
+                                <th class="text-center">
+                                    قیمت آزمون (تومان)
+                                </th>
+                                <th class="text-center">
+                                    مدت زمان آزمون
+                                </th>
+                                <th class="text-center">
+                                    شروع آزمون
+                                </th>
+                                <th class="text-center">
+                                    اتمام آزمون
+                                </th>
+                                <th class="text-center">
+                                    تاریخ آزمون
+                                </th>
+                                <th class="text-center">
+                                    عملیات
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Item1)
+                            {
+                                <tr id="item_@item.TestId">
+                                    <td class="text-center">
+                                        @item.TestTitle
+                                    </td>
+                                    <td class="text-center">
+                                        @item.TestCode
+                                    </td>
+                                    <td class="text-center">
+                                        @item.QuestionCounts
+                                    </td>
+                                    <td class="text-center">
+                                        @item.TestPrice
+                                    </td>
+                                    <td class="text-center">
+                                        @item.TestDuration
+                                    </td>
+                                    <td class="text-center">
+                                        @item.StartTime
+                                    </td>
+                                    <td class="text-center">
+                                        @item.EndTime
+                                    </td>
+                                    <td class="text-center">
+                                        @item.TestDayTime
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="dropdown mb-2">
+                                            <button class="btn p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg text-muted pb-3px"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                <button class="dropdown-item d-flex align-items-center" onclick="RestoreTest('@item.TestId')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm ml-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg> <span class="">انصراف از حذف</span></button>
+                                                <button onclick="DeleteTest('@item.TestId')" class="dropdown-item d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash icon-sm ml-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> <span class="">حذف نهایی</span></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (Model.Item2 > 1)
+                    {
+                        <div class="dataTables_paginate paging_simple_numbers py-3 d-flex justify-content-center" id="dataTableExample_paginate">
+                            <ul class="pagination">
+                                <li class="paginate_button page-item previous @((Model.Item3-1 == 0) ? "disabled" : "")" id="dataTableExample_previous">
+                                    <a href="/AdminPanel/Test/DeletedTestList?pageNumber=@(Model.Item3-1)" aria-controls="dataTableExample" data-dt-idx="0" tabindex="0" class="page-link">قبلی</a>
+                                </li>
+                                @for (int i = 1; i <= (Model.Item2); i++)
+                                {
+                                    <li class="paginate_button page-item @(Model.Item3==i?"active":"")">
+                                        <a href="/AdminPanel/Test/DeletedTestList?pageNumber=@i" aria-controls="dataTableExample" data-dt-idx="1" tabindex="0" class="page-link">@i</a>
+                                    </li>
+                                }
+                                <li class="paginate_button page-item @((Model.Item3+1 > Model.Item2) ? "disabled" : "")" id="dataTableExample_next">
+                                    <a href="/AdminPanel/Test/DeletedTestList?pageNumber=@(Model.Item3+1)" aria-controls="dataTableExample" data-dt-idx="4" tabindex="0" class="page-link">بعدی</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="/js/Alert.js" asp-append-version="true"></script>
+}

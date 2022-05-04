@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>پنل مدیریت | @ViewData["Title"]</title>
+    <partial name="_HeaderRefrences" />
+    @RenderSection("Css",false)
+</head>
+
+<body class="rtl">
+    <div class="main-wrapper">
+
+        <!-- partial:partials/_sidebar.html -->
+        <partial name="_MasterSidebar" />
+   
+        <!-- partial -->
+
+        <div class="page-wrapper">
+
+            <!-- partial:partials/_navbar.html -->
+            <partial name="_MasterNavbar" />
+            <!-- partial -->
+
+            <div class="page-content">
+
+                @RenderBody()
+
+            </div>
+        </div>
+    </div>
+    <partial name="_FooterRefrences" />
+    @RenderSection("Scripts", false)
+</body>
+
+</html>

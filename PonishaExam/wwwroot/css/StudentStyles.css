@@ -1,0 +1,57 @@
+﻿.chooseImage {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.showNewImage {
+    width: 100px;
+    height: 100px;
+}
+.toggleFile span {
+    width: 10px;
+    height: 11px;
+    background-color: white;
+    clip-path: polygon(49% 100%, 0 52%, 100% 52%);
+    display: inline-block;
+    margin-left: 5px;
+    position: relative;
+    top: 0;
+    transition: transform .2s ease-in-out;
+}
+
+.toggleFile span.active {
+    transform: rotate(180deg);
+    position: relative;
+    top: 5px !important;
+}
+
+.File {
+    transition: height .3s ease-in-out;
+}
+
+    .File embed {
+        transition: height .3s ease-in-out;
+    }
+
+.File.hidden {
+    height: 0;
+    opacity: 0;
+    transition: height .3s ease-in-out;
+}
+
+.File.hidden embed {
+    height: 0 !important;
+    transition: height .3s ease-in-out;
+}
+.examBox {
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%);
+}
+.radioStyle {
+    width: 23px;
+    height: 23px;
+    vertical-align: middle;
+    margin: 0 4px;
+}

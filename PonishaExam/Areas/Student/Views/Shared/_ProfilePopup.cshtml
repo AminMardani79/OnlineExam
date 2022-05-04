@@ -1,0 +1,39 @@
+﻿@using PonishaExam.Helper
+<a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <img src="/image/@User.GetStudentImage()" alt="userr">
+</a>
+<div class="dropdown-menu" aria-labelledby="profileDropdown">
+    <div class="dropdown-header d-flex flex-column align-items-center">
+        <div class="figure mb-3">
+            <img src="/image/@User.GetStudentImage()" alt="">
+        </div>
+        <div class="info text-center">
+            <p class="name font-weight-bold mb-0">@User.GetStudentName()</p>
+            <p class="email text-muted mb-3">@User.GetNationalCode()</p>
+        </div>
+    </div>
+    <div class="dropdown-body">
+        <ul class="profile-nav p-0 pt-3">
+            <li class="nav-item">
+                <a href="/StudentPanel/Profile" class="nav-link">
+                    <i data-feather="user"></i>
+                    <span>پروفایل</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/StudentPanel/EditProfile" class="nav-link">
+                    <i data-feather="edit"></i>
+                    <span>ویرایش پروفایل</span>
+                </a>
+            </li>
+           
+            <li class="nav-item">
+                <a href="/Logout" class="nav-link">
+                    <i data-feather="log-out"></i>
+                    <span>خروج</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,155 @@
+﻿@model EditQuestionViewModel
+@{
+    ViewData["Title"] = "ویرایش سوال";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="d-flex justify-content-end px-4">
+                <a class="d-inline-block mt-3 text-black" href="/AdminPanel/Question/@Model.TestId/@ViewBag.GradeId/@ViewBag.LessonId">
+                    سوالات
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <div class="card-body pt-0">
+                <div class="d-flex py-3 align-items-center">
+                    <h3 class="card-title ml-2 mb-0">ویرایش سوال</h3>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        راهنما <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    </button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">
+                                    راهنما <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                در صورتی که برای آزمون فایلی قرار داده اید و صورت سوال های تستی یا تشریحی و همچنین گزینه های سوال تستی در آن فایل قابل مشاهده می باشداز پر کردن صورت سوال و گزینه های سوال تستی صرف نظر کنید.
+                                <br />
+                                برای تغییر نوع سوال فقط کافیست اطلاعات قبلی را در  فرم مربوط به آن سوال تایید کنید.
+                                <br />
+                                توصیه می شود اگر آزمون شما شامل سوال های تستی و تشریحی است ابتدا سوال های تستی و سپس سوال های تشریحی ثبت شوند.
+                                <br />
+                                برای آزمون های جامع امکان ثبتسوال های تشریحی وجود ندارد
+                                <br />
+                                منظور از نمره سوال همان ضریب هر سوال میباشد.در صورتی که قصد دارید تمام سوالات یک درس ضریب مشخصی داشته باشند به تمامی سوالات آن درس نمره مشابه بدهید.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row questionBoxs justify-content-around">
+                    <div class="col-md-6 testBox mb-3 mb-md-0 @((Model.Descriptive == false) ? "active" : "")">
+                        <div class="p-3">
+                            <div class="py-2">
+                                <h4>
+                                    سوال تستی
+                                </h4>
+                            </div>
+                            <form asp-controller="Test" asp-action="EditQuestion" method="post" enctype="multipart/form-data">
+                                <input type="hidden" asp-for="TestId" value="@Model.TestId" />
+                                <input type="hidden" asp-for="Descriptive" value="false" />
+                                <input type="hidden" name="gradeId" value="@ViewBag.GradeId" />
+                                <input type="hidden" name="lesson" value="@ViewBag.LessonId" />
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <label class="control-label">شماره سوال</label>
+                                        <input type="number" min="1" asp-for="QuestionNumber" class="form-control" placeholder="شماره سوال را وارد کنید">
+                                        <span class="text-danger" asp-validation-for="QuestionNumber"></span>
+                                    </div>
+                                    @if (ViewBag.Comprehensive)
+                                    {
+                                        <div class="form-group col-12">
+                                            <label class="control-label">درس مربوطه</label>
+                                            <select class="form-control" asp-for="LessonId" asp-items="@ViewBag.Lessons"></select>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" asp-for="LessonId" />
+                                    }
+                                    <div class="form-group col-12">
+                                        <label class="control-label">صورت سوال</label>
+                                        <textarea asp-for="Question" style="resize: none;height: 70px" class="form-control"></textarea>
+                                        <span class="text-danger" asp-validation-for="Question"></span>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label class="control-label">نمره سوال</label>
+                                        <input type="number" asp-for="Score" class="form-control" placeholder="نمره سوال را وارد کنید">
+                                        <span class="text-danger" asp-validation-for="Score"></span>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label class="control-label">گزینه صحیح</label>
+                                        <input type="number" min="1" max="4" asp-for="TestKeyAnswer" class="form-control" placeholder="گزینه صحیح را وارد کنید">
+                                        <span class="text-danger" asp-validation-for="TestKeyAnswer"></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary submit">ویرایش</button>
+                            </form>
+                        </div>
+                    </div>
+                    @if (!ViewBag.Comprehensive)
+                    {
+                        <div class="col-md-6 testBox @((Model.Descriptive == true) ? "active" : "")">
+                            <div class="p-3">
+                                <div class="py-2">
+                                    <h4>
+                                        سوال تشریحی
+                                    </h4>
+                                </div>
+                                <form asp-controller="Test" asp-action="EditQuestion" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="TestId" value="@Model.TestId" />
+                                    <input type="hidden" asp-for="Descriptive" value="true" />
+                                    <input type="hidden" name="gradeId" value="@ViewBag.GradeId" />
+                                    <input type="hidden" name="lesson" value="@ViewBag.LessonId" />
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <label class="control-label">شماره سوال</label>
+                                            <input type="number" min="1" asp-for="QuestionNumber" class="form-control" placeholder="شماره سوال را وارد کنید">
+                                            <span class="text-danger" asp-validation-for="QuestionNumber"></span>
+                                        </div>
+                                        <input type="hidden" asp-for="LessonId" />
+                                        <div class="form-group col-12">
+                                            <label class="control-label">صورت سوال</label>
+                                            <textarea asp-for="Question" style="resize: none; height: 120px" class="form-control"></textarea>
+                                            <span class="text-danger" asp-validation-for="Question"></span>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label class="control-label">نمره سوال</label>
+                                            <input type="number" asp-for="Score" class="form-control" placeholder="نمره سوال را وارد کنید">
+                                            <span class="text-danger" asp-validation-for="Score"></span>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary submit">ویرایش</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @if (!ViewBag.Comprehensive)
+                {
+                    <div class="indicator p-4 d-flex justify-content-center">
+                        <div class="mx-1 indicator-btn @((Model.Descriptive == false) ? "active" : "")" dataQuestion-id="0"></div>
+                        <div class="mx-1 indicator-btn @((Model.Descriptive == true) ? "active" : "")" dataQuestion-id="1"></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
